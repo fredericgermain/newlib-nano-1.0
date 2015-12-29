@@ -267,7 +267,7 @@ void * nano_malloc(RARG malloc_size_t s)
         *(int *)((char *)r + offset) = -offset;
     }
 
-    assert(align_ptr + size <= (char *)r + alloc_size);
+    assert(align_ptr + s <= (char *)r + alloc_size);
     return align_ptr;
 }
 #endif /* DEFINE_MALLOC */
