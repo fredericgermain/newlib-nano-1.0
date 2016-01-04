@@ -185,6 +185,7 @@ _DEFUN(__ssputc_r, (ptr, c, fp),
        int c _AND
        FILE *fp)
 {
+#ifndef STRING_NO_MALLOC
 	if (fp->_w == 0 && fp->_flags & (__SMBF | __SOPT)) {
 		/* must be asprintf family */
 		unsigned char *str;
@@ -229,7 +230,7 @@ _DEFUN(__ssputc_r, (ptr, c, fp),
 		fp->_bf._size = newsize;
 		fp->_w = newsize - curpos;
 	}
-
+#endif
         if (fp->_w > 0)
         {
             *fp->_p++ = (char)c;
@@ -454,6 +455,7 @@ _DEFUN(_VFPRINTF_R, (data, fp, fmt0, ap),
 
 #else /* STRING_ONLY */
 	/* Create initial buffer if we are called by asprintf family.  */
+#ifndef STRING_NO_MALLOC
 	if (fp->_flags & __SMBF && !fp->_bf._base) {
 		fp->_bf._base = fp->_p = _malloc_r (data, 64);
 		if (!fp->_p) {
@@ -462,6 +464,7 @@ _DEFUN(_VFPRINTF_R, (data, fp, fmt0, ap),
 		}
 		fp->_bf._size = 64;
 	}
+#endif
 #endif /* STRING_ONLY */
 
 	fmt = (char *)fmt0;
