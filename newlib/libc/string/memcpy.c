@@ -49,6 +49,7 @@ QUICKREF
 /* Threshhold for punting to the byte copier.  */
 #define TOO_SMALL(LEN)  ((LEN) < BIGBLOCKSIZE)
 
+ __attribute__ ((used))
 _PTR
 _DEFUN (memcpy, (dst0, src0, len0),
 	_PTR dst0 _AND
